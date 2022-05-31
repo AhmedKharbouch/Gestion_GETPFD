@@ -24,13 +24,8 @@
               </ng-template>
             </ng-template>
             <ng-container *ngIf="accountObservable | async as accountDetails;else errorTemplate">
-              <div class="mb-3 ">
-                <label>Account ID:</label>
-                <label><strong>{{accountDetails.id}}</strong></label>
-              </div>
-              <div class="mb-3">
-                <label>Balance:</label>
-                <label><strong>{{accountDetails.balance | number :'1.2-2'}}</strong></label>
+              <div class="card mt-2 mb-2">
+                <div class="card-header text-center"><strong>Balance:</strong> {{accountDetails.balance | number :'1.2-2'}}</div>
               </div>
 
               <table class="table">
