@@ -1,5 +1,9 @@
 export interface AccountDetails {
-  accountId:            string;
+  id:            string;
+  type:          string;
+  createdAt:     Date;
+  overDraft?:    number;
+  interestRate?: number;
   balance:              number;
   currentPage:          number;
   totalPages:           number;

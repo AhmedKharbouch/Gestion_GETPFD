@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup} from "@angular/forms";
 import {AccountsService} from "../services/accounts.service";
 import {catchError, Observable, throwError} from "rxjs";
 import {AccountDetails} from "../model/account.model";
+import {Route, Router} from "@angular/router";
 
 @Component({
   selector: 'app-accounts',
@@ -14,16 +15,25 @@ export class AccountsComponent implements OnInit {
   accountFormGroup! : FormGroup;
   currentPage :number=0;
   pageSize:number=5;
+  accountDetails:AccountDetails=this.router.getCurrentNavigation()?.extras.state as AccountDetails;
   accountObservable! :Observable<AccountDetails>
   operationFormGroup!:FormGroup
   errorMessage!:string;
 
-  constructor(private fb:FormBuilder,private accountService:AccountsService) { }
+
+  constructor(private fb:FormBuilder,private accountService:AccountsService,private  router:Router) { }
 
   ngOnInit(): void {
-    this.accountFormGroup=this.fb.group({
-      accountId:this.fb.control('')
-    });
+    if(this.accountDetails==null){
+      this.accountFormGroup=this.fb.group({
+        accountId:this.fb.control('')
+      });
+    }else{
+      this.accountFormGroup=this.fb.group({
+        accountId:this.fb.control(this.accountDetails.id)
+      });
+    }
+
     this.operationFormGroup=this.fb.group({
       operationType:this.fb.control(null),
       amount:this.fb.control(0),
