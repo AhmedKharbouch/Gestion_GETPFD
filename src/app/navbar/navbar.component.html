@@ -10,43 +10,72 @@
           <a class="nav-link active" aria-current="page" routerLink="/home">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/depots">Depots</a>
+          <a class="nav-link" routerLink="/depots" *ngIf="securityService.profile && hasRoleUser()">Depots</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/rangees">Rangees</a>
+          <a class="nav-link" routerLink="/kafka" *ngIf="securityService.profile && hasRoleAdmin()">analyse</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/fournisseurs">Fournisseurs</a>
+          <a class="nav-link" routerLink="/rangees" *ngIf="securityService.profile && hasRoleUser()">Rangees</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/fournisseurs" *ngIf="securityService.profile && hasRoleUser()">Fournisseurs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/new-fsr" *ngIf="securityService.profile && hasRoleUser()">add FSR</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/apriori" *ngIf="securityService.profile && hasRoleUser()">Apriori</a>
         </li>
 
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown" *ngIf="securityService.profile">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Products
           </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown" >
             <li><a class="dropdown-item" routerLink="/products">List Products</a></li>
-            <li><a class="dropdown-item" routerLink="/new-product">New product</a></li>
+            <li><a class="dropdown-item" routerLink="/new-product" *ngIf="hasRoleAdmin()">New product</a></li>
             <li><a class="dropdown-item" routerLink="/">---------------</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown" *ngIf="securityService.profile">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Categorie
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
             <li><a class="dropdown-item" routerLink="/categories">List categorie</a></li>
-            <li><a class="dropdown-item" routerLink="/new-category">New categorie</a></li>
+            <li><a class="dropdown-item" routerLink="/new-category" *ngIf="hasRoleAdmin()">New categorie</a></li>
             <li><a class="dropdown-item" routerLink="/">---------------</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
+
+
         </li>
+        <ul class="navbar-nav align-content-end">
+
+            <li class="nav-item dropdown" *ngIf="securityService.profile">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{securityService.profile?.username}}
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdown2">
+                <li><a class="dropdown-item bi-lock" (click)="logout()">Logout</a></li>
+                <li><a class="dropdown-item bi-arrow-counterclockwise" (click)="changePassword()">Reset password</a></li>
+              </ul>
+            </li>
+
+          </ul>
+
        <!-- <li class="nav-item">
           <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
         </li>-->
       </ul>
+      <ul class="navbar-nav align-content-end" *ngIf="!securityService.profile">
+      <a class="btn btn-outline-success me-2 btn-sm" (click)="login()">Login</a>
+      <a class="btn btn-outline-info btn-sm me-2 " (click)="register()">Register</a>
+    </ul>
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-info" type="submit">

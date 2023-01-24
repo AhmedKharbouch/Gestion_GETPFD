@@ -1,0 +1,28 @@
+
+<div class="container mt-3">
+  <div class="card col-md-6  offset-3">
+    <div class="card-header">CSV FILE</div>
+    <div class="card-body">
+      <input class="form-control" type="file" (change)="fileChangeEvent($event)" />
+
+
+    <!--create Table-->
+      <table *ngIf="rules!=null">
+        <tr>
+          <th>rules</th>
+          <th>count</th>
+          <th>lift</th>
+          <th>coverage</th>
+        </tr>
+        <tr *ngFor="let r of rules | async">
+          <td>{{r.rules}}</td>
+          <td>{{r.count}}</td>
+          <td>{{r.lift}}</td>
+          <td>{{r.coverage}}</td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+</div>
+

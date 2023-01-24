@@ -1,15 +1,12 @@
-import { NgModule } from '@angular/core';
+import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { CustomersComponent } from './customers/customers.component';
 import { AccountsComponent } from './accounts/accounts.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { NewCustomerComponent } from './new-customer/new-customer.component';
-import { CustomerAccountsComponent } from './customer-accounts/customer-accounts.component';
 import { BankingHomeComponent } from './banking-home/banking-home.component';
 import { ListProductsComponent } from './product/list-products/list-products.component';
 import { NewProductComponent } from './product/new-product/new-product.component';
@@ -26,15 +23,35 @@ import { AddrangeeTodepotComponent } from './depot/addrangee-todepot/addrangee-t
 import { NewFournisseurComponent } from './fournisseur/new-fournisseur/new-fournisseur.component';
 import { ListFournisseurComponent } from './fournisseur/list-fournisseur/list-fournisseur.component';
 import { UpdateFournisseurComponent } from './fournisseur/update-fournisseur/update-fournisseur.component';
+import { KafkaStreamsComponent } from './analytic/kafka-streams/kafka-streams.component';
+import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
+import { AddproductsRangeeComponent } from './Rangee/addproducts-rangee/addproducts-rangee.component';
+import { AprioriComponent } from './analytic/apriori/apriori.component';
+
+export function kcFactory(kcService: KeycloakService) {
+  return ()=> {
+
+    kcService.init({
+      config: {
+        url: 'http://localhost:8080/',
+        realm: 'Gestion-GETPFD',
+        clientId: 'GETPFD_Front_APP'
+      },
+      initOptions: {
+        //onLoad: 'login-required',
+        onLoad: 'check-sso',
+        checkLoginIframe: true
+      }
+    })
+  }
+}
+
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    CustomersComponent,
     AccountsComponent,
-    NewCustomerComponent,
-    CustomerAccountsComponent,
     BankingHomeComponent,
     ListProductsComponent,
     NewProductComponent,
@@ -51,6 +68,9 @@ import { UpdateFournisseurComponent } from './fournisseur/update-fournisseur/upd
     NewFournisseurComponent,
     ListFournisseurComponent,
     UpdateFournisseurComponent,
+    KafkaStreamsComponent,
+    AddproductsRangeeComponent,
+    AprioriComponent,
 
   ],
     imports: [
@@ -58,9 +78,15 @@ import { UpdateFournisseurComponent } from './fournisseur/update-fournisseur/upd
         AppRoutingModule,
         HttpClientModule, //ici on ajoute le module http client
         ReactiveFormsModule,
-        FormsModule
+        FormsModule,
+        KeycloakAngularModule,
     ],
-  providers: [],
+  providers: [
+    {
+      //add provider for APP_INITIALIZER
+      provide: APP_INITIALIZER,deps:[KeycloakService],useFactory: kcFactory,multi: true}
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

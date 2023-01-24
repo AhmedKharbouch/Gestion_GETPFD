@@ -1,0 +1,82 @@
+
+<div class="container mt-2">
+  <!--  <div *ngIf="errorMessage" class="text-danger">
+    {{errorMessage}}
+    </div>-->
+  <ng-container *ngIf="rangees | async as listRangees; else failureOrLoading">
+    <div class="card">
+      <div class="card-header">Rangees</div>
+      <div class="card-body">
+        <!--   <div *ngIf="searchFormGroup">
+            <form class="d-flex mb-3" [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()" >
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" formControlName="keyword">
+              <button class="btn btn-outline-success" type="submit">
+                <i class="bi bi-search"></i>
+              </button>
+            </form>
+          </div>-->
+
+        <!-- select to filter products -->
+        <!-- <div class="d-flex mb-3 w-50 ">
+           <select class="form-select" aria-label="Default select example" (change)="filterProductByCategory($event)" >
+             <option [ngValue]="null" style="background-color: dodgerblue; color: aliceblue" >Category</option>
+             <option  value="{{this.all}}">All</option>
+             <option *ngFor="let c of categories | async" [value]="c.nom"  >
+               {{c.nom}}
+             </option>
+
+           </select>
+           <button class="btn btn-outline-success m-1" >Filter</button>
+         </div>-->
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">nom</th>
+              <th scope="col">MaxSize</th>
+              <th scope="col">CurrentSize</th>
+              <th scope="col">createdAt</th>
+              <th scope="col">modifiedAt</th>
+              <th scope="col">actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let c of rangees | async">
+              <td>{{c.id}}</td>
+              <td>{{c.nom}}</td>
+              <td>{{c.maxSize | number}}</td>
+              <td>{{c.currentSize}}</td>
+              <td>{{c.createdAt | date: "MM-dd-yyyy"}}</td>
+              <td *ngIf="c.modifiedAt!=null">{{c.modifiedAt | date: "MM-dd-yyyy"}}</td>
+              <td *ngIf="c.modifiedAt==null">no update</td>
+              <td>
+                <button (click)="handleDeleteRangee(c)"  class="btn btn-outline-danger">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+              <td>
+                <button (click)="handleUpdateRangee(c)" class="btn btn-outline-warning">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #failureOrLoading>
+    <ng-container *ngIf="errorMessage;else Loading">
+      <div  class="text-danger">
+        {{errorMessage}}
+      </div>
+    </ng-container>
+    <ng-template #Loading>
+      Loading ......................
+    </ng-template>
+
+  </ng-template>
+
+</div>

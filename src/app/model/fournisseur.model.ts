@@ -12,6 +12,7 @@ export interface Fournisseur {
   modifiedAt:     Date;
   categoryId:number;
   typeFournisseur:TypeFournisseur;
+  typeFsrId:number;
 
 
 }

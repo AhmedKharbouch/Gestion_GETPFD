@@ -105,5 +105,7 @@
       }
     }
   },
-  "defaultProject": "digital-banking-web"
+  "cli": {
+    "analytics": false
+  }
 }

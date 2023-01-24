@@ -1,0 +1,76 @@
+<div class="container mt-3">
+  <div class="card col-md-6  offset-3">
+    <div class="card-header">New Product</div>
+    <div class="card-body">
+      <form [formGroup]="newFsrForGroup" (ngSubmit)="handleSaveFournisseur()">
+        <div class="mb-3">
+          <label class="form-label">Nom:</label><span *ngIf="newFsrForGroup.controls['nom'].valid" class="icon">✔️</span>
+          <input type="text" formControlName="nom" class="form-control" placeholder="Enter nom fournisseur">
+          <span class="text-danger" *ngIf="newFsrForGroup.controls['nom'].touched
+            && newFsrForGroup.controls['nom'].errors
+            && newFsrForGroup.controls['nom'].errors!['required']">
+            Nom is Required
+          </span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">telephone:</label><span *ngIf="newFsrForGroup.controls['telephone'].valid" class="icon">✔️</span>
+          <input type="text" formControlName="telephone" placeholder="Enter telephone" class="form-control">
+          <span class="text-danger" *ngIf="newFsrForGroup.controls['telephone'].touched
+            && newFsrForGroup.controls['telephone'].errors
+            && newFsrForGroup.controls['telephone'].errors!['required']">
+            telephone is not valid
+          </span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">telephoneFixe:</label><span *ngIf="newFsrForGroup.controls['telephoneFixe'].valid" class="icon">✔️</span>
+          <input type="text" formControlName="telephoneFixe" placeholder="Enter telephoneFixe" class="form-control">
+          <span class="text-danger" *ngIf="newFsrForGroup.controls['telephoneFixe'].touched
+            && newFsrForGroup.controls['telephoneFixe'].errors
+            && newFsrForGroup.controls['telephoneFixe'].errors!['required']">
+            telephoneFixe is not valid
+          </span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">email</label><span *ngIf="newFsrForGroup.controls['email'].valid" class="icon">✔️</span>
+          <input type="email" formControlName="email" placeholder="Enter l'email" class="form-control">
+          <span class="text-danger" *ngIf="newFsrForGroup.controls['email'].touched
+            && newFsrForGroup.controls['email'].errors
+            && newFsrForGroup.controls['email'].errors!['required']">
+            prix HT is not valid
+          </span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">adresse:</label><span *ngIf="newFsrForGroup.controls['adresse'].valid" class="icon">✔️</span>
+          <input type="adresse" formControlName="adresse" placeholder="Enter adresse" class="form-control">
+          <span class="text-danger" *ngIf="newFsrForGroup.controls['adresse'].touched
+            && newFsrForGroup.controls['adresse'].errors
+            && newFsrForGroup.controls['adresse'].errors!['required']">
+            adresse is not valid
+          </span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">ville:</label><span *ngIf="newFsrForGroup.controls['ville'].valid" class="icon">✔️</span>
+          <input type="adresse" formControlName="ville" placeholder="Enter ville" class="form-control">
+          <span class="text-danger" *ngIf="newFsrForGroup.controls['ville'].touched
+            && newFsrForGroup.controls['ville'].errors
+            && newFsrForGroup.controls['ville'].errors!['required']">
+            ville is not valid
+          </span>
+        </div>
+        <div class="mb-3">
+          <label >Choose a category:</label><span *ngIf="newFsrForGroup.controls['typeFsrId'].valid" class="icon">✔️</span>
+
+          <select  formControlName="typeFsrId"  class="form-control" >
+            <option [ngValue]="null" disabled>--->Type Fournisseur  <-------</option>
+            <option *ngFor="let c of typeFournisseur | async" [value]="c.id"  >
+              {{c.nom}}
+            </option>
+          </select>
+        </div>
+        <button [disabled]="!newFsrForGroup.valid" class="btn btn-outline-success">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+

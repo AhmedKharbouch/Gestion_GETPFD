@@ -1,0 +1,48 @@
+<div class="container mt-3">
+  <div class="card col-md-6  offset-3">
+    <div class="card-header">New Product</div>
+    <div class="card-body">
+      <form [formGroup]="newProductForGroup" (ngSubmit)="handleSaveProduct()">
+        <div class="mb-3">
+          <label class="form-label">label:</label><span *ngIf="newProductForGroup.controls['label'].valid" class="icon">✔️</span>
+          <input type="text" formControlName="label" class="form-control" placeholder="Enter label product">
+          <span class="text-danger" *ngIf="newProductForGroup.controls['label'].touched
+            && newProductForGroup.controls['label'].errors
+            && newProductForGroup.controls['label'].errors!['required']">
+            label is Required
+          </span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">prix HT:</label><span *ngIf="newProductForGroup.controls['prix_HT'].valid" class="icon">✔️</span>
+          <input type="text" formControlName="prix_HT" placeholder="Enter prix hors taxe" class="form-control">
+          <span class="text-danger" *ngIf="newProductForGroup.controls['prix_HT'].touched
+            && newProductForGroup.controls['prix_HT'].errors
+            && newProductForGroup.controls['prix_HT'].errors!['required']">
+            prix HT is not valid
+          </span>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">quantite:</label><span *ngIf="newProductForGroup.controls['quantite'].valid" class="icon">✔️</span>
+          <input type="text" formControlName="quantite" placeholder="Enter quantite" class="form-control">
+          <span class="text-danger" *ngIf="newProductForGroup.controls['quantite'].touched
+            && newProductForGroup.controls['quantite'].errors
+            && newProductForGroup.controls['quantite'].errors!['required']">
+            quantite is not valid
+          </span>
+        </div>
+        <div class="mb-3">
+        <label >Choose a category:</label><span *ngIf="newProductForGroup.controls['categoryId'].valid" class="icon">✔️</span>
+
+        <select  formControlName="categoryId"  class="form-control" >
+          <option [ngValue]="null" disabled>--->choose category <-------</option>
+          <option *ngFor="let c of categories | async" [value]="c.id"  >
+            {{c.nom}}
+          </option>
+        </select>
+        </div>
+        <button [disabled]="!newProductForGroup.valid" class="btn btn-outline-success">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
+

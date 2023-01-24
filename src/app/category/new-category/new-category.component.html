@@ -1,0 +1,22 @@
+<div class="container mt-3">
+  <div class="card col-md-6  offset-3">
+    <div class="card-header">New Category</div>
+
+  <div class="card-body">
+      <form [formGroup]="newCategoryForGroup" (ngSubmit)="handleSaveCategory()">
+        <div class="mb-3">
+          <label class="form-label">name:</label><span *ngIf="newCategoryForGroup.controls['nom'].valid" class="icon">✔️</span>
+          <input type="text" formControlName="nom" class="form-control"  placeholder="Enter name category">
+          <span class="text-danger" *ngIf="newCategoryForGroup.controls['nom'].touched
+            && newCategoryForGroup.controls['nom'].errors
+            && newCategoryForGroup.controls['nom'].errors!['required']">
+            name of category is Required
+          </span>
+        </div>
+        <button [disabled]="!newCategoryForGroup.valid" class="btn btn-outline-success">Save</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+

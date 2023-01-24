@@ -1,0 +1,21 @@
+<div class="container mt-3">
+  <div class="card col-md-6  offset-3">
+    <div class="card-header">Update Category N° {{category.id}}</div>
+    <div class="card-body">
+      <form [formGroup]="categoryFormGroup" (ngSubmit)="handleUpdateCategory()">
+        <div class="mb-3">
+          <label class="form-label">label:</label>
+          <input type="text" formControlName="nom" class="form-control">
+          <span class="text-danger" *ngIf="categoryFormGroup.controls['nom'].touched
+            && categoryFormGroup.controls['nom'].errors
+            && categoryFormGroup.controls['nom'].errors!['required']">
+            name of category is Required
+          </span>
+        </div>
+        <button [disabled]="!categoryFormGroup.valid" class="btn btn-outline-success">Update</button>
+        <button (click)="handleBack()" class="btn btn-outline-info">Back</button>
+      </form>
+    </div>
+  </div>
+</div>
+

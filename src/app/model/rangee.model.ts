@@ -10,6 +10,7 @@ export interface Rangee {
   maxSize:    number;
   currentSize: number;
   product: Product[];
+  productsIds : number[];
 
 
 }

@@ -6,7 +6,8 @@ export const environment = {
   production: false,
   backendHost:"http://localhost:8081",
   backendDepot:"http://localhost:8087",
-  backendFSR:"http://localhost:8082"
+  backendFSR:"http://localhost:8082",
+  backendKafka:"http://localhost:8086"
 
  /* backendHost:"http://localhost:8888/PRODUCT-SERVICE",
   backendDepot:"http://localhost:8888/DEPOT-SERVICE"*/
