@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import { AccountsComponent } from './accounts/accounts.component';
 import {HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { BankingHomeComponent } from './banking-home/banking-home.component';
@@ -51,7 +50,6 @@ export function kcFactory(kcService: KeycloakService) {
   declarations: [
     AppComponent,
     NavbarComponent,
-    AccountsComponent,
     BankingHomeComponent,
     ListProductsComponent,
     NewProductComponent,
