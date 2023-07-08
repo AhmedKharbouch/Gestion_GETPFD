@@ -25,3 +25,10 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+some screen shot of GETPFD interface :
+>![after_con](https://github.com/AhmedKharbouch/Gestion_GETPFD/assets/102327247/470eeef4-7f2b-44ec-8016-63277ec6601b)
+>![depot](https://github.com/AhmedKharbouch/Gestion_GETPFD/assets/102327247/77062c58-8c9a-4858-b223-e1f35743280f)
+>![auth](https://github.com/AhmedKharbouch/Gestion_GETPFD/assets/102327247/ae63f69b-88e0-4a99-9234-6c2f7d03c7ee)
+>![update depot](https://github.com/AhmedKharbouch/Gestion_GETPFD/assets/102327247/47a4f58e-0853-4bfe-bfef-5e1c34d1b773)
+>![home_dec](https://github.com/AhmedKharbouch/Gestion_GETPFD/assets/102327247/9a9e600c-43c6-4709-b8bd-24a82cfa624a)
