@@ -7,7 +7,11 @@ import {SecurityService} from "../services/security.service";
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit {
+  isCollapsed = false;
 
+  toggleMenu() {
+    this.isCollapsed = !this.isCollapsed;
+  }
   constructor(public securityService:SecurityService) { }
 
   ngOnInit(): void {
@@ -47,6 +51,10 @@ export class NavbarComponent implements OnInit {
     return this.securityService.kcService.register();
   }
   changePassword() {
-    ;
+
+  }
+
+  toggleCollapse(): void {
+    this.isCollapsed = !this.isCollapsed;
   }
 }

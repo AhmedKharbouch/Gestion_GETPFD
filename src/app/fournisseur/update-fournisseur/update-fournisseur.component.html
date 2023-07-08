@@ -1,93 +1,51 @@
+
 <div class="container mt-3">
-  <div class="card col-md-6  offset-3">
-    <div class="card-header">Update Fournisseur{{fournisseur.nom}}  N° {{fournisseur.id}}</div>
+  <div class="card col-md-6 offset-3">
+    <div class="card-header">Mise à jour du fournisseur {{fournisseur.nom}}  N° {{fournisseur.id}}</div>
     <div class="card-body">
-      <!--      <form [formGroup]="productFormGroup" (ngSubmit)="handleUpdateCategory()">
-              <div class="mb-3">
-                <label class="form-label">label:</label>
-                <input type="text" formControlName="label" class="form-control">
-                <span class="text-danger" *ngIf="productFormGroup.controls['label'].touched
-                  && productFormGroup.controls['label'].errors
-                  && productFormGroup.controls['label'].errors!['required']">
-                  label of product is Required
-                </span>
-              </div>
-              <div class="mb-3">
-                <label class="form-label">quantite:</label>
-                <input type="text" formControlName="quantite" class="form-control">
-                <span class="text-danger" *ngIf="productFormGroup.controls['quantite'].touched
-                  && productFormGroup.controls['quantite'].errors
-                  && productFormGroup.controls['quantite'].errors!['required']">
-                  quantite of product is Required
-                </span>
-              </div>
-              <div class="mb-3">
-                <label >Choose a category:</label><span *ngIf="productFormGroup.controls['categoryId'].valid" class="icon">✔️</span>
-
-                <select  formControlName="categoryId"  class="form-control" >
-                  <option *ngIf="product.category==null"  [ngValue]="null" disabled>-&ndash;&gt;choose category <-&#45;&#45;&#45;&#45;&#45;&#45;</option>
-                  <option *ngIf="product.category!=null" [ngValue]="null" >{{this.product.category.nom}}</option>
-                  <option *ngFor="let c of categories | async" [value]="c.id">
-                    {{c.nom}}
-                  </option>
-                </select>
-              </div>
-              <button [disabled]="!productFormGroup.valid" class="btn btn-outline-success">Update</button>
-              <button (click)="handleBack()" class="btn btn-outline-info">Back</button>
-            </form>-->
-      <form  (ngSubmit)="handleUpdateFsr()">
+      <form (ngSubmit)="handleUpdateFsr()">
         <div class="mb-3">
-          <label class="form-label">Ville:</label>
+          <label class="form-label">Ville :</label>
           <input type="text" name="ville" [(ngModel)]="fournisseur.ville" class="form-control">
-          <span class="text-danger" *ngIf="fournisseur.ville==null">
-            ville of product is Required
+          <span class="text-danger" *ngIf="!fournisseur.ville">
+            La ville du fournisseur est requise
           </span>
         </div>
         <div class="mb-3">
-          <label class="form-label">email:</label>
+          <label class="form-label">Email :</label>
           <input type="text" name="email" [(ngModel)]="fournisseur.email" class="form-control">
-          <span class="text-danger" *ngIf="fournisseur.email==null">
-            email of product is Required
+          <span class="text-danger" *ngIf="!fournisseur.email">
+            L'email du fournisseur est requis
           </span>
         </div>
         <div class="mb-3">
-          <label class="form-label">telephone:</label>
+          <label class="form-label">Téléphone :</label>
           <input type="text" name="telephone" [(ngModel)]="fournisseur.telephone" class="form-control">
-          <span class="text-danger" *ngIf="fournisseur.telephone==null">
-            telephone of product is Required
+          <span class="text-danger" *ngIf="!fournisseur.telephone">
+            Le téléphone du fournisseur est requis
           </span>
         </div>
         <div class="mb-3">
-          <label class="form-label">telephoneFixe:</label>
+          <label class="form-label">Téléphone Fixe :</label>
           <input type="text" name="telephoneFixe" [(ngModel)]="fournisseur.telephoneFixe" class="form-control">
-          <span class="text-danger" *ngIf="fournisseur.telephoneFixe==null">
-            telephoneFixe of product is Required
+          <span class="text-danger" *ngIf="!fournisseur.telephoneFixe">
+            Le téléphone fixe du fournisseur est requis
           </span>
         </div>
         <div class="mb-3">
-          <label >Choose a Type FSR:</label><span *ngIf="fournisseur.typeFournisseur!=null" class="icon">✔️</span>
-
-          <!--<select  name="category"  class="form-control" >
-            <option *ngIf="product.category==null"  [ngValue]="null" disabled>&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;choose category <-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</option>
-            <option *ngIf="product.category!=null" style="background-color: forestgreen;color: white" [(ngModel)]="product.category"  >{{this.product.category.nom}}</option>
-            <option *ngFor="let c of categories | async" [value]="c">
-              {{c.nom}}
-            </option>
-          </select>-->
-          <select  name="typeFournisseur" [(ngModel)]="fournisseur.typeFournisseur" [ngModelOptions]="{standalone: true}" class="form-control" >
-            <option *ngIf="fournisseur.typeFournisseur!=null"  [ngValue]="null" disabled>---------->choose Type FSR <---------</option>
-            <option *ngIf="fournisseur.typeFournisseur!=null" style="background-color: forestgreen;color: white" [(ngModel)]="fournisseur.typeFournisseur"  >{{this.fournisseur.typeFournisseur.nom}}</option>
+          <label>Choisir une catégorie :</label>
+          <span *ngIf="fournisseur.typeFournisseur" class="icon">✔️</span>
+          <select name="typeFournisseur" [(ngModel)]="fournisseur.typeFournisseur" class="form-control">
+            <option *ngIf="fournisseur.typeFournisseur" [ngValue]="null" disabled>----------> Choisissez une catégorie <---------</option>
+            <option *ngIf="fournisseur.typeFournisseur" style="background-color: forestgreen; color: white" [(ngModel)]="fournisseur.typeFournisseur">{{ fournisseur.typeFournisseur.nom }}</option>
             <option *ngFor="let c of typeFsr | async" [ngValue]="c" [selected]="c.id === fournisseur.typeFournisseur?.id">
-              {{c.nom}}
+              {{ c.nom }}
             </option>
           </select>
         </div>
-        <button [disabled]="this.fournisseur.nom==null && this.fournisseur.email " class="btn btn-outline-success">Update</button>
-        <button (click)="handleBack()" class="btn btn-outline-info">Back</button>
+        <button [disabled]="!fournisseur.nom || !fournisseur.email" class="btn btn-outline-success">Mettre à jour</button>
+        <button (click)="handleBack()" class="btn btn-outline-info">Retour</button>
       </form>
     </div>
   </div>
 </div>
-
-
-

@@ -22,6 +22,7 @@ import {AprioriComponent} from "./analytic/apriori/apriori.component";
 
 const routes: Routes = [
   //ici on configure le path pour les links
+  {path:"",component:BankingHomeComponent},
   {path:"home",component:BankingHomeComponent},
   {path:"products",component:ListProductsComponent ,canActivate: [AuthGuard],data: {roles: ['USER']}},
   {path:"new-product",component:NewProductComponent,canActivate: [AuthGuard],data: {roles: ['ADMIN']}},

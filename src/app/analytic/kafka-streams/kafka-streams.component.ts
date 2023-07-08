@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, OnInit, ViewChild} from '@angular/core';
 import {AnalyticsService} from "../../services/analytics.service";
 import {HttpClient} from "@angular/common/http";
-import {Chart} from "chart.js/auto";
+import * as Chart from 'chart.js';
 
 @Component({
   selector: 'app-kafka-streams',
@@ -38,9 +38,12 @@ export class KafkaStreamsComponent implements OnInit {
       },
       options: {
         scales: {
-          y: {
-            beginAtZero: true
-          }
+  yAxes: [{
+    ticks: {
+      beginAtZero: true
+    }
+  }],
+
         }
       }
     });

@@ -17,74 +17,74 @@ import {TypeFournisseur} from "../../model/typeFournisseur.model";
   styleUrls: ['./update-fournisseur.component.css']
 })
 export class UpdateFournisseurComponent implements OnInit {
-  fournisseur:Fournisseur= this.handleSearchFsr(Number(this.router.routerState.snapshot.url.split("/")[2])) as unknown as Fournisseur;
-  product1!:Product
-  typeFsr!:Observable<Array<TypeFournisseur>>
-  categoryId!:Category;
-  FSRId!:number;
+  fournisseur: Fournisseur = this.handleSearchFsr(Number(this.router.routerState.snapshot.url.split("/")[2])) as unknown as Fournisseur;
+  product1!: Product;
+  typeFsr!: Observable<Array<TypeFournisseur>>;
+  categoryId!: Category;
+  FSRId!: number;
   errorMessage!: string;
-  constructor(private fb:UntypedFormBuilder,private fournisseurService:FournisseurService,private  router:Router) {
+  FsrFormGroup!: UntypedFormGroup;
 
-    this.FSRId=Number(this.router.routerState.snapshot.url.split("/")[2]);
+  constructor(private fb: UntypedFormBuilder, private fournisseurService: FournisseurService, private router: Router) {
+    this.FSRId = Number(this.router.routerState.snapshot.url.split("/")[2]);
     this.handleSearchFsr(this.FSRId);
   }
 
   ngOnInit(): void {
-    this.handleSearchtypeFsr()
+    this.handleSearchtypeFsr();
+
+    this.fournisseurService.getFournisseur(this.FSRId).subscribe(
+      data => {
+        this.fournisseur = data;
+      },
+      error => {
+        this.errorMessage = error.message;
+      }
+    );
   }
-  handleSearchFsr(depotId:number) {
-    //let kw=this.searchFormGroup?.value.keyword;
+
+
+
+  handleSearchFsr(depotId: number) {
     this.fournisseurService.getFournisseur(depotId).subscribe(
-      data=>{
-        this.fournisseur=data;
+      data => {
+        this.fournisseur = data;
         console.log(data);
       }
-    )
+    );
   }
+
   handleSearchtypeFsr() {
-    this.typeFsr=this.fournisseurService.getTypeFournisseurs().pipe(
+    this.typeFsr = this.fournisseurService.getTypeFournisseurs().pipe(
       catchError(err => {
-        this.errorMessage=err.message;
+        this.errorMessage = err.message;
         return throwError(err);
       })
-
     );
   }
 
   handleUpdateFsr() {
-    //this.product1 = this.productFormGroup.value;
-    //this.product.label=this.product1.label
-    //this.product.quantite=this.product1.quantite
-    console.log(this.fournisseur.id)
-    console.log(this.fournisseur.nom)
-    console.log(this.fournisseur.createdAt)
-    console.log(this.fournisseur.modifiedAt)
-    console.log(this.fournisseur.ville)
-    console.log(this.fournisseur.adresse)
-    /* this.categoryService.updateCategory(category1).pipe(
+    console.log(this.fournisseur.id);
+    console.log(this.fournisseur.nom);
+    console.log(this.fournisseur.createdAt);
+    console.log(this.fournisseur.modifiedAt);
+    console.log(this.fournisseur.ville);
+    console.log(this.fournisseur.adresse);
 
-       catchError(err => {
-         this.errorMessage=err.message;
-         return throwError(err);
-       }))*/
     this.fournisseurService.updateFournisseur(this.fournisseur).subscribe({
-      next:data=>{
-        alert(this.fournisseur.nom + " updated successfully");
-        //this.newCustomerForGroup.reset()
+      next: data => {
+        alert(this.fournisseur.nom + " mis à jour avec succès");
         this.router.navigateByUrl("/fournisseurs");
-      },error: err => {
-
-        alert( this.fournisseur.nom +" doesn't exist");
-
-        console.log( err.value);
+      },
+      error: err => {
+        alert(this.fournisseur.nom + " n'existe pas");
+        console.log(err.value);
         this.router.navigateByUrl("/fournisseurs");
       }
     });
   }
-
   handleBack() {
     this.router.navigateByUrl("/fournisseurs");
   }
-
-
 }
+

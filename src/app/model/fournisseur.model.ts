@@ -10,7 +10,6 @@ export interface Fournisseur {
   ville : string;
   createdAt:     Date;
   modifiedAt:     Date;
-  categoryId:number;
   typeFournisseur:TypeFournisseur;
   typeFsrId:number;
 

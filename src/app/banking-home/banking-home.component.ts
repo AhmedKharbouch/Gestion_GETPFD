@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-banking-home',
@@ -6,12 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./banking-home.component.css']
 })
 export class BankingHomeComponent implements OnInit {
-
+  chart: any;
   date!:number
+
   constructor() { }
 
   ngOnInit(): void {
+
     this.date=Date.now();
   }
+
 
 }

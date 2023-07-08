@@ -23,11 +23,11 @@ export class FournisseurService {
   }
   //get fournisseur by id
   public getFournisseur(id:number):Observable<Fournisseur>{
-    return this.http.get<Fournisseur>(environment.backendFSR+"/fsr/"+id)
+    return this.http.get<Fournisseur>(environment.backendFSR+"/fournisseurs/"+id)
   }
   //add new fournisseur
   public saveFournisseur(fournisseur:Fournisseur):Observable<Fournisseur>{
-    return this.http.post<Fournisseur>(environment.backendFSR+"/addFsr",fournisseur);
+    return this.http.post<Fournisseur>(environment.backendFSR+"/addfournisseurs",fournisseur);
   }
   //get typeFournisseur by id
   public getTypeFsrById(id:number):Observable<TypeFournisseur>{
@@ -36,11 +36,11 @@ export class FournisseurService {
 
   //update fournisseur
   public updateFournisseur(fournisseur:Fournisseur):Observable<Fournisseur>{
-    return this.http.post<Fournisseur>(environment.backendFSR+"/updateFsr",fournisseur);
+    return this.http.put<Fournisseur>(environment.backendFSR+"/updateFsr",fournisseur);
   }
   //delete fournisseur
   public deleteFournisseur(id:number){
-    return this.http.delete(environment.backendFSR+"/deleteFsr/"+id);
+    return this.http.delete(environment.backendFSR+"/fournisseurs/"+id);
   }
 
   //get all typeFournisseur
