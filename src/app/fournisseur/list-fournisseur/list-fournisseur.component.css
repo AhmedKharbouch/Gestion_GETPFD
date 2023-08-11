@@ -1,0 +1,28 @@
+.update-button {
+  background-color: #2980b9;
+  border: none;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.update-button:hover {
+  background-color: #3498db;
+}
+
+.back-button {
+  background-color: #e74c3c;
+  border: none;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #c0392b;
+}
+

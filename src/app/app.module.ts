@@ -1,6 +1,5 @@
 import {APP_INITIALIZER, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -32,7 +31,7 @@ export function kcFactory(kcService: KeycloakService) {
 
     kcService.init({
       config: {
-        url: 'http://localhost:8080/',
+        url: 'http://localhost:8081/',
         realm: 'Gestion-GETPFD',
         clientId: 'GETPFD_Front_APP'
       },

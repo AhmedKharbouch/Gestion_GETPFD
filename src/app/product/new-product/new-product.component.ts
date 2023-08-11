@@ -14,52 +14,43 @@ import {Category} from "../../model/category.model";
   styleUrls: ['./new-product.component.css'],
 })
 export class NewProductComponent implements OnInit {
-  newProductForGroup! :UntypedFormGroup
-  categories!:Observable<Array<Category>>
-  categoryId!:Category;
+  formulaireNouveauProduit!: UntypedFormGroup;
+  categories!: Observable<Category[]>;
 
-  errorMessage! :String;
-  constructor(private fb :UntypedFormBuilder,private categoryService:CategoryService,private productService:ProductService,private router :Router) { }
+  constructor(
+    private constructeurFormulaire: UntypedFormBuilder,
+    private serviceCategorie: CategoryService,
+    private serviceProduit: ProductService,
+    private routeur: Router
+  ) {}
 
   ngOnInit(): void {
-    this.categories=this.categoryService.getCategories();
-    this.newProductForGroup=this.fb.group({
-      label:this.fb.control(null,[Validators.required,Validators.minLength(4)]),
-      prix_HT:this.fb.control(null,[Validators.required]),
-      quantite:this.fb.control(null,[Validators.required,Validators.minLength(1)]),
-      categoryId:this.fb.control(null)
+    this.categories = this.serviceCategorie.getCategories();
+    this.formulaireNouveauProduit = this.constructeurFormulaire.group({
+      label: ['', [Validators.required, Validators.minLength(4)]],
+      prix_HT: ['', [Validators.required]],
+      quantite: ['', [Validators.required, Validators.minLength(1)]],
+      categoryId: [''],
     });
   }
 
-
-  handleSaveProduct() {
-
-    let product:Product = this.newProductForGroup.value;
-    this.categoryService.getCategoryById(product.categoryId).subscribe({
-      next:data=>{
-        product.category=data;
-        console.log(product.category.id);
-        console.log(product.category.nom);
-        console.log(product.category.createdAt);
-        console.log(product.category.modifiedAt);
-        console.log(product.categoryId);
-        this.productService.saveProduct(product).subscribe({
-          next:data=>{
-            alert(data.label+ " saved successfully");
-            //this.newCustomerForGroup.reset()
-            this.router.navigateByUrl("/products").then(r => console.log(r)); // navigate to products page  after saving  the product
-          },error: err => {
-
-            alert( product.label +" already exist");
-            console.log( err.value);
-            this.newProductForGroup.reset()
-          }
+  enregistrerProduit(): void {
+    const nouveauProduit: Product = this.formulaireNouveauProduit.value;
+    this.serviceCategorie.getCategoryById(nouveauProduit.categoryId).subscribe({
+      next: (categorie) => {
+        nouveauProduit.category = categorie;
+        this.serviceProduit.saveProduct(nouveauProduit).subscribe({
+          next: (data) => {
+            alert(data.label + " enregistré avec succès");
+            this.routeur.navigateByUrl("/produits").then(() => console.log('Navigué vers la page des produits'));
+          },
+          error: (erreur) => {
+            alert(nouveauProduit.label + " existe déjà");
+            console.log(erreur);
+            this.formulaireNouveauProduit.reset();
+          },
         });
-      }
+      },
     });
-
-
-
   }
-
 }

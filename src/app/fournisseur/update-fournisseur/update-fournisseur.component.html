@@ -1,43 +1,42 @@
-
-<div class="container mt-3">
-  <div class="card col-md-6 offset-3">
-    <div class="card-header">Mise à jour du fournisseur {{fournisseur.nom}}  N° {{fournisseur.id}}</div>
+<div class="container mt-5">
+  <div class="card col-md-6 offset-md-3">
+    <div class="card-header bg-primary text-white">
+      Mise à jour du fournisseur {{ fournisseur.nom }}  N° {{ fournisseur.id }}
+    </div>
     <div class="card-body">
       <form (ngSubmit)="handleUpdateFsr()">
         <div class="mb-3">
-          <label class="form-label">Ville :</label>
+          <label class="form-label">Ville:</label>
           <input type="text" name="ville" [(ngModel)]="fournisseur.ville" class="form-control">
-          <span class="text-danger" *ngIf="!fournisseur.ville">
+          <div class="text-danger" *ngIf="!fournisseur.ville">
             La ville du fournisseur est requise
-          </span>
+          </div>
         </div>
         <div class="mb-3">
-          <label class="form-label">Email :</label>
-          <input type="text" name="email" [(ngModel)]="fournisseur.email" class="form-control">
-          <span class="text-danger" *ngIf="!fournisseur.email">
+          <label class="form-label">Email:</label>
+          <input type="email" name="email" [(ngModel)]="fournisseur.email" class="form-control">
+          <div class="text-danger" *ngIf="!fournisseur.email">
             L'email du fournisseur est requis
-          </span>
+          </div>
         </div>
         <div class="mb-3">
-          <label class="form-label">Téléphone :</label>
-          <input type="text" name="telephone" [(ngModel)]="fournisseur.telephone" class="form-control">
-          <span class="text-danger" *ngIf="!fournisseur.telephone">
+          <label class="form-label">Téléphone:</label>
+          <input type="tel" name="telephone" [(ngModel)]="fournisseur.telephone" class="form-control">
+          <div class="text-danger" *ngIf="!fournisseur.telephone">
             Le téléphone du fournisseur est requis
-          </span>
+          </div>
         </div>
         <div class="mb-3">
-          <label class="form-label">Téléphone Fixe :</label>
-          <input type="text" name="telephoneFixe" [(ngModel)]="fournisseur.telephoneFixe" class="form-control">
-          <span class="text-danger" *ngIf="!fournisseur.telephoneFixe">
+          <label class="form-label">Téléphone Fixe:</label>
+          <input type="tel" name="telephoneFixe" [(ngModel)]="fournisseur.telephoneFixe" class="form-control">
+          <div class="text-danger" *ngIf="!fournisseur.telephoneFixe">
             Le téléphone fixe du fournisseur est requis
-          </span>
+          </div>
         </div>
         <div class="mb-3">
-          <label>Choisir une catégorie :</label>
-          <span *ngIf="fournisseur.typeFournisseur" class="icon">✔️</span>
+          <label>Choisir une catégorie:</label>
           <select name="typeFournisseur" [(ngModel)]="fournisseur.typeFournisseur" class="form-control">
-            <option *ngIf="fournisseur.typeFournisseur" [ngValue]="null" disabled>----------> Choisissez une catégorie <---------</option>
-            <option *ngIf="fournisseur.typeFournisseur" style="background-color: forestgreen; color: white" [(ngModel)]="fournisseur.typeFournisseur">{{ fournisseur.typeFournisseur.nom }}</option>
+            <option value="" disabled selected>Choisissez une catégorie</option>
             <option *ngFor="let c of typeFsr | async" [ngValue]="c" [selected]="c.id === fournisseur.typeFournisseur?.id">
               {{ c.nom }}
             </option>

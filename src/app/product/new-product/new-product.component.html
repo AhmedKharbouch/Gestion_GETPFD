@@ -1,48 +1,46 @@
-<div class="container mt-3">
-  <div class="card col-md-6  offset-3">
-    <div class="card-header">New Product</div>
+<div class="container mt-5">
+  <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+    <div class="card-header bg-primary text-white">
+      <h4>Nouveau Produit</h4>
+    </div>
     <div class="card-body">
-      <form [formGroup]="newProductForGroup" (ngSubmit)="handleSaveProduct()">
+      <form [formGroup]="formulaireNouveauProduit" (ngSubmit)="enregistrerProduit()">
         <div class="mb-3">
-          <label class="form-label">label:</label><span *ngIf="newProductForGroup.controls['label'].valid" class="icon">✔️</span>
-          <input type="text" formControlName="label" class="form-control" placeholder="Enter label product">
-          <span class="text-danger" *ngIf="newProductForGroup.controls['label'].touched
-            && newProductForGroup.controls['label'].errors
-            && newProductForGroup.controls['label'].errors!['required']">
-            label is Required
-          </span>
+          <label class="form-label">Label :</label>
+          <input type="text" formControlName="label" class="form-control" placeholder="Entrer le label du produit">
+          <div *ngIf="formulaireNouveauProduit.get('label')?.touched && formulaireNouveauProduit.get('label')?.hasError('required')"
+               class="text-danger">Le label est obligatoire
+          </div>
+          <div *ngIf="formulaireNouveauProduit.get('label')?.touched && formulaireNouveauProduit.get('label')?.hasError('minlength')"
+               class="text-danger">Le label doit contenir au moins 4 caractères
+          </div>
         </div>
         <div class="mb-3">
-          <label class="form-label">prix HT:</label><span *ngIf="newProductForGroup.controls['prix_HT'].valid" class="icon">✔️</span>
-          <input type="text" formControlName="prix_HT" placeholder="Enter prix hors taxe" class="form-control">
-          <span class="text-danger" *ngIf="newProductForGroup.controls['prix_HT'].touched
-            && newProductForGroup.controls['prix_HT'].errors
-            && newProductForGroup.controls['prix_HT'].errors!['required']">
-            prix HT is not valid
-          </span>
+          <label class="form-label">Prix HT :</label>
+          <input type="text" formControlName="prix_HT" placeholder="Entrer le prix hors taxe" class="form-control">
+          <div *ngIf="formulaireNouveauProduit.get('prix_HT')?.touched&& formulaireNouveauProduit.get('prix_HT')?.hasError('required')"
+               class="text-danger">Le prix HT est obligatoire
+          </div>
         </div>
         <div class="mb-3">
-          <label class="form-label">quantite:</label><span *ngIf="newProductForGroup.controls['quantite'].valid" class="icon">✔️</span>
-          <input type="text" formControlName="quantite" placeholder="Enter quantite" class="form-control">
-          <span class="text-danger" *ngIf="newProductForGroup.controls['quantite'].touched
-            && newProductForGroup.controls['quantite'].errors
-            && newProductForGroup.controls['quantite'].errors!['required']">
-            quantite is not valid
-          </span>
+          <label class="form-label">Quantité :</label>
+          <input type="text" formControlName="quantite" placeholder="Entrer la quantité" class="form-control">
+          <div *ngIf="formulaireNouveauProduit.get('quantite')?.touched && formulaireNouveauProduit.get('quantite')?.hasError('required')"
+               class="text-danger">La quantité est obligatoire
+          </div>
+          <div *ngIf="formulaireNouveauProduit.get('quantite')?.touched && formulaireNouveauProduit.get('quantite')?.hasError('minlength')"
+               class="text-danger">La quantité doit être au moins de 1
+          </div>
         </div>
         <div class="mb-3">
-        <label >Choose a category:</label><span *ngIf="newProductForGroup.controls['categoryId'].valid" class="icon">✔️</span>
-
-        <select  formControlName="categoryId"  class="form-control" >
-          <option [ngValue]="null" disabled>--->choose category <-------</option>
-          <option *ngFor="let c of categories | async" [value]="c.id"  >
-            {{c.nom}}
-          </option>
-        </select>
+          <label>Catégorie :</label>
+          <select formControlName="categoryId" class="form-control">
+            <option value="" disabled selected>Choisir une catégorie</option>
+            <option *ngFor="let categorie of categories | async" [value]="categorie.id">{{ categorie.nom }}</option>
+          </select>
         </div>
-        <button [disabled]="!newProductForGroup.valid" class="btn btn-outline-success">Save</button>
+        <button [disabled]="!formulaireNouveauProduit.valid" class="btn btn-primary">Enregistrer</button>
       </form>
     </div>
   </div>
 </div>
-

@@ -1,88 +1,134 @@
-
-<div class="container mt-2">
-  <!--  <div *ngIf="errorMessage" class="text-danger">
-    {{errorMessage}}
-    </div>-->
+<div class="container mt-5">
   <ng-container *ngIf="products | async as listProducts; else failureOrLoading">
-    <div class="card">
-
-      <div class="card-header">Products</div>
-     <div class="card-body">
-      <!--   <div *ngIf="searchFormGroup">
-          <form class="d-flex mb-3" [formGroup]="searchFormGroup" (ngSubmit)="handleSearchCustomers()" >
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" formControlName="keyword">
-            <button class="btn btn-outline-success" type="submit">
-              <i class="bi bi-search"></i>
-            </button>
-          </form>
-        </div>-->
-
-       <!-- select to filter products -->
+    <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+      <div class="card-header bg-primary text-white">
+        <h4>Produits</h4>
+      </div>
+      <div class="card-body">
         <div class="d-flex mb-3 w-50 ">
-          <select class="form-select" aria-label="Default select example" (change)="filterProductByCategory($event)" >
-            <option [ngValue]="null" style="background-color: dodgerblue; color: aliceblue" >Category</option>
-            <option  value="{{this.all}}">All</option>
-            <option *ngFor="let c of categories | async" [value]="c.nom"  >
-              {{c.nom}}
-            </option>
-
+          <select class="form-select" aria-label="Sélectionnez une catégorie" (change)="filterProductByCategory($event)">
+            <option [ngValue]="null" class="bg-primary text-white">Catégorie</option>
+            <option value="{{ all }}">Tous</option>
+            <option *ngFor="let categorie of categories1 | async" [value]="categorie.nom">{{ categorie.nom }}</option>
           </select>
-          <button class="btn btn-outline-success m-1" >Filter</button>
+          <button class="btn btn-outline-success m-1">Filtrer</button>
         </div>
-       <div class="table-responsive">
-       <table class="table table-striped table-hover">
-         <thead>
-         <tr>
-           <th scope="col">ID</th>
-           <th scope="col">label</th>
-           <th scope="col">prix_HT</th>
-           <th scope="col">prix_TT</th>
-           <th scope="col">quantite</th>
-           <th scope="col">createdAt</th>
-           <th scope="col">modifiedAt</th>
-           <th scope="col">category</th>
-           <th *ngIf="hasRoleAdmin()" scope="col">actions</th>
-         </tr>
-         </thead>
-         <tbody>
-         <tr *ngFor="let c of products | async">
-           <td>{{c.id}}</td>
-           <td>{{c.label}}</td>
-           <td>{{c.prix_HT}}</td>
-           <td>{{c.prix_TT}}</td>
-           <td>{{c.quantite}}</td>
-           <td>{{c.createdAt | date: "MM-dd-yyyy"}}</td>
-           <td *ngIf="c.modifiedAt!=null">{{c.modifiedAt | date: "MM-dd-yyyy"}}</td>
-           <td *ngIf="c.modifiedAt==null">no update</td>
-           <td *ngIf="c.category!=null">{{c.category.nom}}</td>
-           <td *ngIf="c.category==null">no category</td>
-           <td>
-             <button *ngIf="hasRoleAdmin()" (click)="handleDeleteProduct(c)"  class="btn btn-outline-danger">
-               <i class="bi bi-trash"></i>
-             </button>
-           </td>
-           <td>
-             <button *ngIf="hasRoleAdmin()"  (click)="handleUpdateProduct(c)" class="btn btn-outline-warning">
-               <i class="bi bi-pencil-square"></i>
-             </button>
-           </td>
-         </tr>
-         </tbody>
-       </table>
-       </div>
-     </div>
-   </div>
- </ng-container>
- <ng-template #failureOrLoading>
-   <ng-container *ngIf="errorMessage;else Loading">
-     <div  class="text-danger">
-       {{errorMessage}}
-     </div>
-   </ng-container>
-   <ng-template #Loading>
-     Loading ......................
-   </ng-template>
-
- </ng-template>
-
+        <div class="table-responsive">
+          <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Label</th>
+              <th scope="col">Prix HT</th>
+              <th scope="col">Prix TT</th>
+              <th scope="col">Quantité</th>
+              <th scope="col">Créé le</th>
+              <th scope="col">Modifié le</th>
+              <th scope="col">Catégorie</th>
+              <th *ngIf="hasRoleAdmin()" scope="col">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let produit of products | async">
+              <td>{{ produit.id }}</td>
+              <td>{{ produit.label }}</td>
+              <td>{{ produit.prix_HT }}</td>
+              <td>{{ produit.prix_TT }}</td>
+              <td>{{ produit.quantite }}</td>
+              <td>{{ produit.createdAt | date: "dd-MM-yyyy" }}</td>
+              <td *ngIf="produit.modifiedAt != null">{{ produit.modifiedAt | date: "dd-MM-yyyy" }}</td>
+              <td *ngIf="produit.modifiedAt == null">Pas de mise à jour</td>
+              <td *ngIf="produit.category != null">{{ produit.category.nom }}</td>
+              <td *ngIf="produit.category == null">Pas de catégorie</td>
+              <td>
+                <button *ngIf="hasRoleAdmin()" (click)="handleDeleteProduct(produit)" class="btn btn-danger">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+              <td>
+                <button *ngIf="hasRoleAdmin()" (click)="handleUpdateProduct(produit)" class="btn btn-warning">
+                  <i class="bi bi-pencil-square"></i>
+                </button>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #failureOrLoading>
+    <ng-container *ngIf="errorMessage; else Loading">
+      <div class="text-danger">
+        {{ errorMessage }}
+      </div>
+    </ng-container>
+    <ng-template #Loading>
+      Chargement en cours...
+    </ng-template>
+  </ng-template>
 </div>
+<div class="container mt-5">
+  <div class="row">
+    <!-- Moitié gauche pour le formulaire -->
+    <div class="col-md-6">
+      <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+        <div class="card-header bg-primary text-white">
+          <h4>Nouveau Produit</h4>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="formulaireNouveauProduit" (ngSubmit)="enregistrerProduit()">
+            <div class="mb-3">
+              <label class="form-label">Label :</label>
+              <input type="text" formControlName="label" class="form-control" placeholder="Entrer le label du produit">
+              <div *ngIf="formulaireNouveauProduit.get('label')?.touched && formulaireNouveauProduit.get('label')?.hasError('required')"
+                   class="text-danger">Le label est obligatoire
+              </div>
+              <div *ngIf="formulaireNouveauProduit.get('label')?.touched && formulaireNouveauProduit.get('label')?.hasError('minlength')"
+                   class="text-danger">Le label doit contenir au moins 4 caractères
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Prix HT :</label>
+              <input type="text" formControlName="prix_HT" placeholder="Entrer le prix hors taxe" class="form-control">
+              <div *ngIf="formulaireNouveauProduit.get('prix_HT')?.touched&& formulaireNouveauProduit.get('prix_HT')?.hasError('required')"
+                   class="text-danger">Le prix HT est obligatoire
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Quantité :</label>
+              <input type="number" formControlName="quantite" placeholder="Entrer la quantité" class="form-control">
+              <div *ngIf="formulaireNouveauProduit.get('quantite')?.touched && formulaireNouveauProduit.get('quantite')?.hasError('required')"
+                   class="text-danger">La quantité est obligatoire
+              </div>
+              <div *ngIf="formulaireNouveauProduit.get('quantite')?.touched && formulaireNouveauProduit.get('quantite')?.hasError('minlength')"
+                   class="text-danger">La quantité doit être au moins de 1
+              </div>
+            </div>
+            <div class="mb-3">
+              <label>Catégorie :</label>
+              <select formControlName="categoryId" class="form-control">
+                <option value="" disabled selected>Choisir une catégorie</option>
+                <option *ngFor="let categorie of categories | async" [value]="categorie.id">{{ categorie.nom }}</option>
+              </select>
+            </div>
+            <button [disabled]="!formulaireNouveauProduit.valid" class="btn btn-primary">Enregistrer</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Moitié droite pour la carte de description -->
+    <div class="col-md-6">
+      <div class="card shadow-lg p-3 mb-5 bg-white rounded">
+        <div class="card-header bg-primary text-white">
+          <h4>Description du Produit</h4>
+        </div>
+        <div class="card-body">
+          <!-- Ajoutez votre contenu de description ici -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

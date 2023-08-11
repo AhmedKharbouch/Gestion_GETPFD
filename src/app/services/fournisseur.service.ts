@@ -25,6 +25,10 @@ export class FournisseurService {
   public getFournisseur(id:number):Observable<Fournisseur>{
     return this.http.get<Fournisseur>(environment.backendFSR+"/fournisseurs/"+id)
   }
+
+  public searchFsrs(keyword:string):Observable<Array<Fournisseur>>{
+    return this.http.get<Array<Fournisseur>>(environment.backendFSR+"/searchFsr/"+keyword)
+  }
   //add new fournisseur
   public saveFournisseur(fournisseur:Fournisseur):Observable<Fournisseur>{
     return this.http.post<Fournisseur>(environment.backendFSR+"/addfournisseurs",fournisseur);

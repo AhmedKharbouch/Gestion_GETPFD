@@ -2,39 +2,6 @@
   <div class="card col-md-6  offset-3">
     <div class="card-header">Update Product N° {{product.id}}</div>
     <div class="card-body">
-<!--      <form [formGroup]="productFormGroup" (ngSubmit)="handleUpdateCategory()">
-        <div class="mb-3">
-          <label class="form-label">label:</label>
-          <input type="text" formControlName="label" class="form-control">
-          <span class="text-danger" *ngIf="productFormGroup.controls['label'].touched
-            && productFormGroup.controls['label'].errors
-            && productFormGroup.controls['label'].errors!['required']">
-            label of product is Required
-          </span>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">quantite:</label>
-          <input type="text" formControlName="quantite" class="form-control">
-          <span class="text-danger" *ngIf="productFormGroup.controls['quantite'].touched
-            && productFormGroup.controls['quantite'].errors
-            && productFormGroup.controls['quantite'].errors!['required']">
-            quantite of product is Required
-          </span>
-        </div>
-        <div class="mb-3">
-          <label >Choose a category:</label><span *ngIf="productFormGroup.controls['categoryId'].valid" class="icon">✔️</span>
-
-          <select  formControlName="categoryId"  class="form-control" >
-            <option *ngIf="product.category==null"  [ngValue]="null" disabled>-&ndash;&gt;choose category <-&#45;&#45;&#45;&#45;&#45;&#45;</option>
-            <option *ngIf="product.category!=null" [ngValue]="null" >{{this.product.category.nom}}</option>
-            <option *ngFor="let c of categories | async" [value]="c.id">
-              {{c.nom}}
-            </option>
-          </select>
-        </div>
-        <button [disabled]="!productFormGroup.valid" class="btn btn-outline-success">Update</button>
-        <button (click)="handleBack()" class="btn btn-outline-info">Back</button>
-      </form>-->
       <form  (ngSubmit)="handleUpdateCategory()">
         <div class="mb-3">
           <label class="form-label">label:</label>
@@ -52,14 +19,6 @@
         </div>
         <div class="mb-3">
           <label >Choose a category:</label><span *ngIf="product.category!=null" class="icon">✔️</span>
-
-          <!--<select  name="category"  class="form-control" >
-            <option *ngIf="product.category==null"  [ngValue]="null" disabled>&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&ndash;&gt;choose category <-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</option>
-            <option *ngIf="product.category!=null" style="background-color: forestgreen;color: white" [(ngModel)]="product.category"  >{{this.product.category.nom}}</option>
-            <option *ngFor="let c of categories | async" [value]="c">
-              {{c.nom}}
-            </option>
-          </select>-->
           <select  name="category" [(ngModel)]="product.category" class="form-control" >
             <option *ngIf="product.category!=null"  [ngValue]="null" disabled>---------->choose category <---------</option>
             <option *ngIf="product.category!=null" style="background-color: forestgreen;color: white" [(ngModel)]="product.category"  >{{this.product.category.nom}}</option>

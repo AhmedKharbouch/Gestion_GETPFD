@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {catchError, map, Observable, throwError} from "rxjs";
 import {Customer} from "../../model/customer.model";
-import {UntypedFormBuilder, UntypedFormGroup} from "@angular/forms";
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {ProductService} from "../../services/product.service";
 import {Product} from "../../model/product.model";
@@ -18,13 +18,27 @@ export class ListProductsComponent implements OnInit {
   products! : Observable<Array<Product>>;
   errorMessage! :String;
   searchFormGroup! :UntypedFormGroup;
-  categories!:Observable<Array<Category>>;
+  categories1!:Observable<Array<Category>>;
   all:string="all";
-  constructor(private securityService:SecurityService, private categoryService:CategoryService, private productService:ProductService,private fb:UntypedFormBuilder,private router:Router) { }
+  formulaireNouveauProduit!: UntypedFormGroup;
+  categories!: Observable<Category[]>;
+  // Définir ces variables dans la classe du composant
+  currentPage: number = 1;
+  itemsPerPage: number = 10; // Nombre d'articles par page
+  totalPages: number = 1;
+  pages: number[] = [];
+  constructor(private constructeurFormulaire: UntypedFormBuilder,private securityService:SecurityService, private categoryService:CategoryService, private productService:ProductService,private fb:UntypedFormBuilder,private router:Router,) { }
 
   ngOnInit(): void {
-    this.categories=this.categoryService.getCategories();
+    this.categories1=this.categoryService.getCategories();
    this.handleSearchProducts()
+    this.categories = this.categoryService.getCategories();
+    this.formulaireNouveauProduit = this.constructeurFormulaire.group({
+      label: ['', [Validators.required, Validators.minLength(4)]],
+      prix_HT: ['', [Validators.required]],
+      quantite: ['', [Validators.required, Validators.minLength(1)]],
+      categoryId: [''],
+    });
   }
   handleSearchProducts() {
     let kw=this.searchFormGroup?.value.keyword;
@@ -45,6 +59,7 @@ export class ListProductsComponent implements OnInit {
     return this.securityService.hasRole("ADMIN");
   }
 
+
   handleDeleteProduct(c: Product) {
     let conf =confirm("Are you sure?");
     if(!conf) return;
@@ -63,10 +78,35 @@ export class ListProductsComponent implements OnInit {
       }
     })
   }
-
+  enregistrerProduit(): void {
+    const nouveauProduit: Product = this.formulaireNouveauProduit.value;
+    this.categoryService.getCategoryById(nouveauProduit.categoryId).subscribe({
+      next: (categorie) => {
+        nouveauProduit.category = categorie;
+        this.productService.saveProduct(nouveauProduit).subscribe({
+          next: (data) => {
+            alert(data.label + " enregistré avec succès");
+           // this.router.navigateByUrl("/produits").then(() => console.log('Navigué vers la page des produits'));
+            this.reloadPage();
+          },
+          error: (erreur) => {
+            alert(nouveauProduit.label + " existe déjà");
+            console.log(erreur);
+            this.formulaireNouveauProduit.reset();
+          },
+        });
+      },
+    });
+  }
   handleUpdateProduct(product: Product) {
     this.router.navigateByUrl("/update-product/"+product.id,{state:product})
   }
+  reloadPage() {
+    const currentUrl = this.router.url;
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigateByUrl(currentUrl);
+    });}
+
 
   filterProductByCategory(event: any) {
     let categoryName=event.target.value;

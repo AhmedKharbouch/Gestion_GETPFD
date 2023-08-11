@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backendHost:"http://localhost:8081",
+  backendHost:"http://localhost:8086",
   backendDepot:"http://localhost:8087",
   backendFSR:"http://localhost:8082",
   backendKafka:"http://localhost:8086"
