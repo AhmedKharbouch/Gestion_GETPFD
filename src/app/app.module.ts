@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './navbar/navbar.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { BankingHomeComponent } from './banking-home/banking-home.component';
 import { ListProductsComponent } from './product/list-products/list-products.component';
@@ -25,6 +25,17 @@ import { KafkaStreamsComponent } from './analytic/kafka-streams/kafka-streams.co
 import {KeycloakAngularModule, KeycloakService} from "keycloak-angular";
 import { AddproductsRangeeComponent } from './Rangee/addproducts-rangee/addproducts-rangee.component';
 import { AprioriComponent } from './analytic/apriori/apriori.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  NbThemeModule,
+  NbLayoutModule,
+  NbCardModule,
+  NbMenuModule,
+  NbSidebarModule,
+  NbAlertModule
+} from '@nebular/theme';
+import { NbEvaIconsModule } from '@nebular/eva-icons';
+import {AuthInterceptorService} from "./interceptor/auth-interceptor.service";
 
 export function kcFactory(kcService: KeycloakService) {
   return ()=> {
@@ -70,18 +81,31 @@ export function kcFactory(kcService: KeycloakService) {
     AprioriComponent,
 
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        HttpClientModule, //ici on ajoute le module http client
-        ReactiveFormsModule,
-        FormsModule,
-        KeycloakAngularModule,
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule, //ici on ajoute le module http client
+    ReactiveFormsModule,
+    FormsModule,
+    KeycloakAngularModule,
+    BrowserAnimationsModule,
+    NbThemeModule.forRoot({name: 'default'}),
+    NbLayoutModule,
+    NbEvaIconsModule,
+    NbCardModule,
+    NbMenuModule,
+    NbSidebarModule,
+    NbAlertModule,
+  ],
   providers: [
     {
       //add provider for APP_INITIALIZER
-      provide: APP_INITIALIZER,deps:[KeycloakService],useFactory: kcFactory,multi: true}
+      provide: APP_INITIALIZER,
+      deps:[KeycloakService],
+      useFactory: kcFactory,
+      useClass: AuthInterceptorService,
+      multi: true,
+    }
 
   ],
   bootstrap: [AppComponent]

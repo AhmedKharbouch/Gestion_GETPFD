@@ -10,7 +10,6 @@ export interface Depot {
   currentSize: number;
   modifiedAt:     Date;
   createdAt:     Date;
-  //rangee: Rangee[];
   rangee:Observable<Array<Rangee>>;
 
 }

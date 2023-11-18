@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {NbMenuItem} from "@nebular/theme";
 
 @Component({
   selector: 'app-banking-home',

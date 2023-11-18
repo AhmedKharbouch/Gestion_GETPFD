@@ -16,14 +16,14 @@ export class FournisseurService {
 
   //create all methods for CRUD operations
   public getFournisseurs():Observable<Array<Fournisseur>>{
-    return this.http.get<Array<Fournisseur>>(environment.backendFSR+"/fournisseurs")
+    return this.http.get<Array<Fournisseur>>(environment.backendFSR+"/FSRS")
   }
   public searchFournisseurs(keyword:string):Observable<Array<Fournisseur>>{
     return this.http.get<Array<Fournisseur>>(environment.backendFSR+"/searchFsr/"+keyword)
   }
   //get fournisseur by id
   public getFournisseur(id:number):Observable<Fournisseur>{
-    return this.http.get<Fournisseur>(environment.backendFSR+"/fournisseurs/"+id)
+    return this.http.get<Fournisseur>(environment.backendFSR+"/FSR/"+id)
   }
 
   public searchFsrs(keyword:string):Observable<Array<Fournisseur>>{
@@ -31,7 +31,7 @@ export class FournisseurService {
   }
   //add new fournisseur
   public saveFournisseur(fournisseur:Fournisseur):Observable<Fournisseur>{
-    return this.http.post<Fournisseur>(environment.backendFSR+"/addfournisseurs",fournisseur);
+    return this.http.post<Fournisseur>(environment.backendFSR+"/addFSR",fournisseur);
   }
   //get typeFournisseur by id
   public getTypeFsrById(id:number):Observable<TypeFournisseur>{
@@ -39,12 +39,12 @@ export class FournisseurService {
   }
 
   //update fournisseur
-  public updateFournisseur(fournisseur:Fournisseur):Observable<Fournisseur>{
-    return this.http.put<Fournisseur>(environment.backendFSR+"/updateFsr",fournisseur);
+  public updateFournisseur(fsr:Fournisseur):Observable<Fournisseur>{
+    return this.http.put<Fournisseur>(environment.backendFSR+"/updateFsr",fsr);
   }
   //delete fournisseur
   public deleteFournisseur(id:number){
-    return this.http.delete(environment.backendFSR+"/fournisseurs/"+id);
+    return this.http.delete(environment.backendFSR+"/FSR/"+id);
   }
 
   //get all typeFournisseur
